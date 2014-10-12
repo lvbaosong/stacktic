@@ -11,6 +11,9 @@ class Renderer
     res += "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">"
 
     @options.items.forEach (i) ->
+      if not i.$path
+        throw new Error("Sitemap renderer encountered an item without a $path")
+
       loc = url.resolve(Renderer.host, i.$path)
       res += "<url><loc>#{loc}</loc>"
       res += "<lastmod>#{i.$lastmod}</lastmod>" if i.$lastmod
